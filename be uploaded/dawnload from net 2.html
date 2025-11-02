@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><em>fast download</em> </head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video to MP3/MP4 Converter</title>
+   
+</head>
+<body>
+    <div class="container">
+        <h1>Video to MP3/MP4 Converter</h1>
+        <form id="converterForm">
+            <input type="url" id="videoUrl" placeholder="Enter video URL" required>
+            <select id="format">
+                <option value="mp3">MP3</option>
+                <option value="mp4">MP4</option>
+            </select>
+            <button type="submit">Convert</button>
+        </form>
+        <div id="result" style="margin-top: 20px;"></div>
+
+        <h2>Most Downloaded</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Video </th>
+                    <th>Downloads</th>
+                </tr>
+            </thead>
+            <tbody id="mostDownloaded">
+                <!-- Rows will be dynamically added here -->
+                <tr>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+                                                                   
+    <p><h4><em>instagram:gihozorwanda,facebook:gihozo rwanda</em> </h4></p>
+            
+    <script>
+        const form = document.getElementById('converterForm');
+        const resultDiv = document.getElementById('result');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const videoUrl = document.getElementById('videoUrl').value;
+            const format = document.getElementById('format').value;
+
+            resultDiv.innerHTML = 'Processing...';
+
+            try {
+                const response = await fetch('https://your-backend-api.com/convert', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ url: videoUrl, format: format })
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to process the video.');
+                }
+
+                const data = await response.json();
+
+                resultDiv.innerHTML = `<a href="${data.downloadUrl}" download>Download ${format.toUpperCase()}</a>`;
+            } catch (error) {
+                resultDiv.innerHTML = `Error: ${error.message}`;
+            }
+        });
+    </script>
+
+    <div class="footer">
+       
+        <p>&copy; GIHOZO MIREMBE- All rights reserved. Based in Rwanda.</p>
+    </div>
+</body>
+</html>
